@@ -13,4 +13,5 @@ class EisenhowersModel(db.Model):
     id = Column(Integer, primary_key=True)
     type = Column(String(100))
 
-    tasks = relationship("TasksModel", backref=backref("eisenhowers", uselist=False))
+    tasks = relationship("TasksModel", backref=backref("eisenhowers", uselist=False
+    ))

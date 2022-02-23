@@ -20,7 +20,7 @@ def create_task():
         if importance not in allowed_values or urgency not in allowed_values:
             raise NumerosInvalidos(description="De acordo com a matriz Einsenhower apenas são permitidos os valores 1 e 2 nas chaves 'urgency' e 'importance'.")
 
-        data['eisenhower_id'] = einsenhower(i=importance, u=urgency)
+        data['eisenhower_id'] = eisenhower(i=importance, u=urgency)
 
         task = TasksModel(**data)
 
