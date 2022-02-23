@@ -1,12 +1,10 @@
-
-from unicodedata import category
-from xml.etree.ElementInclude import include
 from flask import request, current_app, jsonify
 from app.models.categories_model import CategoriesModel
-from app.configs.database import db
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import UnmappedInstanceError
 from psycopg2.errors import UniqueViolation
+
+from app.models.eisenhowers_model import EisenhowersModel
 
 
 def create_category():
@@ -15,7 +13,7 @@ def create_category():
     try:
         session = current_app.db.session
 
-        data['name'] = data['name'].capitalize()
+        data['name'] = data['name'].lower()
 
         category = CategoriesModel(**data)
         session.add(category)
@@ -61,4 +59,21 @@ def del_category(id: int):
 
 
 def show_categories():
-    return ""
+
+    categories = CategoriesModel.query.all()
+
+
+    print(categories)
+
+    return jsonify([{
+        "id": cat.id,
+        "name": cat.name,
+        "description": cat.description,
+        "tasks": [{
+            "id": task.id,
+            "name": task.name,
+            "description": task.description,
+            "duration": task.duration,
+            "classification": EisenhowersModel.query.filter_by(id= task.eisenhower_id).first().type
+        } for task in cat.tasks]
+    } for cat in categories]), 200

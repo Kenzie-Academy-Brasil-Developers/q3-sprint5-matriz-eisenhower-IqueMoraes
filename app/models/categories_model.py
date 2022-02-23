@@ -4,7 +4,6 @@ from sqlalchemy import Column, Integer, String, Text
 from sqlalchemy.orm import relationship
 from app.models.tasks_categories import tasks_categories
 
-
 @dataclass
 class CategoriesModel(db.Model):
     id: int
@@ -18,4 +17,4 @@ class CategoriesModel(db.Model):
     name = Column(String(100), nullable=False, unique=True)
     description = Column(Text)
 
-    tasks = relationship("TasksModel", secondary=tasks_categories, backref="categories" )
+    tasks = relationship("TasksModel", secondary=tasks_categories, back_populates="categories" )

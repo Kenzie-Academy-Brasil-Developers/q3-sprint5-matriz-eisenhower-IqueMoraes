@@ -1,4 +1,4 @@
-from app.controllers.tasks_controller import create_task, del_task, update_task
+from app.controllers.tasks_controller import create_task, del_task, update_task 
 from flask import Blueprint
 
 
